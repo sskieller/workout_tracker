@@ -1,41 +1,85 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors'),
+	express = require('express'),
+	app = express(),
+	router = express.Router(),
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+	layouts = require("express-ejs-layouts"),
+	logger = require("morgan"),
+	path = require("path"),
+	methodOverride = require("method-override"),
+	expressValidator = require("express-validator"),
 
-var app = express();
+	expressSession = require("express-session"),
+	cookieParser = require("cookie-parser"),
+	connectFlash = require("connect-flash"),
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
+	passport = require("passport")
+
+	indexRouter = require('./routes/index'),
+	usersRouter = require('./routes/users'),
+	workoutProgramsRouter = require("./routes/workoutPrograms"),
+	workoutActivitiesRouter = require("./routes/workoutActivities");
+
+// App set / use
+app.set("port", process.env.PORT || 3000);
 app.set('view engine', 'ejs');
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+router.use(express.json());
+router.use(express.urlencoded({
+	extended: false
+	})
+);
+router.use(expressValidator());
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+router.use(cookieParser("secret_passcode_should_use_env_var"));
+router.use(expressSession({
+	secret: "secret_passcode_should_use_env_var",
+	cookie: {
+		maxAge: 4000000
+	},
+	resave: false,
+	saveUninitialized: false
+}));
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+// Security
+router.use(passport.initialize());
+router.use(passport.session());
+const User = require("./models/user");
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser);
+passport.deserializeUser(User.deserializeUser);
+
+router.use(connectFlash());
+router.use((req,res,next) => {
+	res.locals.flashMessages = req.flash();
+	res.locals.loggedIn = req.isAuthenticated();
+	res.locals.currentUser = req.user;
+	next();
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+// view engine setup
+router.use(express.static(path.join(__dirname, "public")));
+router.use(layouts);
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+router.use(logger("dev"));
+router.use(homeController.logRequestPaths);
+router.use(
+	methodOverride("_method", {
+		methods: ["POST", "GET"]
+	})
+);
+
+// ROUTES
+router.use('/', indexRouter);
+router.use('/users', usersRouter);
+router.use("/workoutPrograms", workoutProgramsRouter);
+router.use("/workoutActivities", workoutActivitiesRouter);
+
+// Error handling
+router.use(errorController.logErrors);
+router.use(errorController.respondNoResourceFound);
+router.use(errorController.respondInternalError);
+
+app.listen(app.get("port"), () => {
+	console.log(`Server running at http://localhost:${app.get("port")}`);
 });
-
-module.exports = app;
