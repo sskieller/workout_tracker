@@ -24,6 +24,10 @@ const express = require('express'),
 // Required to connect to database
 const db = require('./db-init');
 
+app.use(function(err, req, res, next) {
+    console.log(err);
+});
+
 // App set / use
 app.set('view engine', 'ejs');
 
@@ -49,8 +53,8 @@ router.use(passport.initialize());
 router.use(passport.session());
 const User = require("./models/user");
 passport.use(User.createStrategy());
-passport.serializeUser(User.serializeUser);
-passport.deserializeUser(User.deserializeUser);
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 router.use(connectFlash());
 router.use((req,res,next) => {
@@ -78,6 +82,7 @@ app.use("/", router);
 router.get("/", homeController.index);
 // Users
 router.get("/users/login", usersController.login);
+// Redirects automatically in the 'authenticate' method
 router.post("/users/login", usersController.authenticate);
 router.get("/users/logout", 
 	usersController.logout, usersController.redirectView);
@@ -91,9 +96,11 @@ router.put("/users/:id/update",
 	usersController.update, usersController.redirectView);
 router.delete("/users/:id/delete", 
 	usersController.delete, usersController.redirectView);
-// WorkoutPrograms
-// Exercises
-// WorkoutActivities
-
+// WorkoutPrograms (EDIT THESE)
+router.get("/workoutPrograms", homeController.index);
+// Exercises (EDIT THESE)
+router.get("/exercises", homeController.index);
+// WorkoutActivities (EDIT THESE)
+router.get("/workoutActivities", homeController.index);
 
 module.exports = app;

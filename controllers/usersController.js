@@ -128,7 +128,7 @@ module.exports = {
         failureRedirect: "/users/login",
         failureFlash: "Failed to login",
         successRedirect: "/",
-        successFlash: "Logged in!"
+        successFlash: "Logged in!",
     }),
 
     validate: (req, res, next) => {
@@ -137,11 +137,6 @@ module.exports = {
         }).trim();
 
         req.check("email", "Email is invalid").isEmail();
-        req.check("zipCode", "Zip code is invalid")
-            .notEmpty().isInt().isLength({
-                min: 4,
-                max: 4
-            }).equals(req.body.zipCode);
 
         req.check("password", "Password cannot be empty").notEmpty();
 
