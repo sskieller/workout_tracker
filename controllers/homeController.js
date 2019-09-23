@@ -2,7 +2,9 @@
 
 module.exports = {
     index: (req,res ) => {
-        res.render("index");
+        res.render("index", {
+            title: "Workout Tracker"
+        });
     },
 
     logRequestPaths: (req,res,next) => {

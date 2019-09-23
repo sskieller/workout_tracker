@@ -73,7 +73,9 @@ router.use(
 );
 
 // Home
-router.get('/', homeController.index);
+app.use("/", router);
+
+router.get("/", homeController.index);
 // Users
 router.get("/users/login", usersController.login);
 router.post("/users/login", usersController.authenticate);
@@ -89,9 +91,6 @@ router.delete("/users/:id/delete", usersController.delete, usersController.redir
 // WorkoutPrograms
 // Exercises
 // WorkoutActivities
-//router.use("/workoutPrograms", workoutProgramsRouter);
-//router.use("/exercises", exerciseRouter);
-//router.use("/workoutActivities", workoutActivitiesRouter);
 
 // Error handling
 router.use(errorController.logErrors);
