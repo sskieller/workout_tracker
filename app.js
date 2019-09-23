@@ -1,4 +1,4 @@
-const express = require('express'),
+const express = require("express"),
 	app = express(),
 	router = express.Router(),
 
@@ -12,29 +12,27 @@ const express = require('express'),
 	cookieParser = require("cookie-parser"),
 	connectFlash = require("connect-flash"),
 
-	passport = require("passport")
+	passport = require("passport"),
 
 	homeController = require("./controllers/homeController"),
-	errorController = require("./controllers/errorController"),
-	usersController = require("./controllers/usersController");
-	//workoutProgramsController = require("./controllers/workoutProgramsController"),
-	//exercisesController = require("./controllers/exercisesController"),
+	usersController = require("./controllers/usersController"),
+	workoutProgramsController = require("./controllers/workoutProgramsController");
 	//workoutActivitiesController = require("./controllers/workoutActivitiesController");
 
 // Required to connect to database
-const db = require('./db-init');
+const db = require("./db-init");
 
 app.use(function(err, req, res, next) {
-    console.log(err);
+	console.log(err);
 });
 
 // App set / use
-app.set('view engine', 'ejs');
+app.set("view engine", "ejs");
 
 router.use(express.json());
 router.use(express.urlencoded({
 	extended: false
-	})
+})
 );
 router.use(expressValidator());
 
@@ -76,31 +74,59 @@ router.use(
 	})
 );
 
-// Home
+// HOME
 app.use("/", router);
-
 router.get("/", homeController.index);
-// Users
-router.get("/users/login", usersController.login);
+
+// LOGIN
+router.get("/users/login", 
+	usersController.login);
 // Redirects automatically in the 'authenticate' method
-router.post("/users/login", usersController.authenticate);
+router.post("/users/login", 
+	usersController.authenticate);
 router.get("/users/logout", 
 	usersController.logout, usersController.redirectView);
-router.get("/users", usersController.index, usersController.indexView);
-router.get("/users/new", usersController.new);
-router.post("/users/create", usersController.validate,
-	usersController.create, usersController.redirectView);
-router.get("/users/:id", usersController.show, usersController.showView);
-router.get("/users/:id/edit", usersController.edit);
+// USERS
+router.get("/users", 
+	usersController.index, usersController.indexView);
+router.get("/users/new", 
+	usersController.new);
+router.post("/users/create", 
+	usersController.validate, usersController.create, usersController.redirectView);
+router.get("/users/:id", 
+	usersController.show, usersController.showView);
+router.get("/users/:id/edit", 
+	usersController.edit);
 router.put("/users/:id/update", 
 	usersController.update, usersController.redirectView);
 router.delete("/users/:id/delete", 
 	usersController.delete, usersController.redirectView);
-// WorkoutPrograms (EDIT THESE)
-router.get("/workoutPrograms", homeController.index);
-// Exercises (EDIT THESE)
-router.get("/exercises", homeController.index);
-// WorkoutActivities (EDIT THESE)
-router.get("/workoutActivities", homeController.index);
+
+// WorkoutPrograms
+router.get("/workoutPrograms", 
+	workoutProgramsController.index, workoutProgramsController.indexView);
+router.get("/workoutPrograms/new", 
+	workoutProgramsController.new);
+router.post("/workoutPrograms/create", 
+	workoutProgramsController.validate, 
+	workoutProgramsController.create, 
+	workoutProgramsController.redirectView);
+router.get("/workoutPrograms/:id", 
+	workoutProgramsController.show, workoutProgramsController.showView);
+router.get("/workoutPrograms/:id/edit", 
+	workoutProgramsController.edit);
+router.put("/workoutPrograms/:id/update", 
+	workoutProgramsController.update, 
+	workoutProgramsController.redirectView);
+router.delete("/workoutPrograms/:id/delete", 
+	workoutProgramsController.delete, 
+	workoutProgramsController.redirectView);
+
+// TODO: på en eller anden måde skal WORKOUTPROGRAM opdateres til at kunne modificeres
+// med EXERCISES. Se i WORKOUTPROGRAMSCONTROLLER, samt WORKOUTPROGRAM model for mere.
+// APP.JS indeholder routes, men kræver nogle stykker mere for at kunne lave exercises.
+// Kig i SHOW.EJS for WORKOUTPROGRAMS for at se oversigten over visningen af det 
+// enkelte workoutProgram. 
+
 
 module.exports = app;

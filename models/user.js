@@ -1,49 +1,50 @@
 const mongoose = require("mongoose"),
-    {Schema} = mongoose,
-    passportLocalMongoose = require("passport-local-mongoose"),
+	{Schema} = mongoose,
+	passportLocalMongoose = require("passport-local-mongoose"),
+	WorkoutProgram = require("./workoutProgram"),
 
-    userSchema = new Schema(
-        {
-            name: {
-                first: {
-                    type: String,
-                    trim: true
-                },
-                last: {
-                    type: String,
-                    trim: true
-                }
-            },
-            email: {
-                type: String,
-                required: true,
-                lowercase: true,
-                unique: true
-            },
-            //workoutPrograms: [
-            //    {
-            //        type: Schema.Types.ObjectId, ref: "workoutProgram"
-            //    }
-            //],
-            //workoutActivities: [
-            //    {
-            //        type: Schema.Types.ObjectId, ref: "workoutActivity"
-            //    }
-            //]
-        },
-        {
-            timestamps: true
-        }
-    );
+	userSchema = new Schema(
+		{
+			name: {
+				first: {
+					type: String,
+					trim: true
+				},
+				last: {
+					type: String,
+					trim: true
+				}
+			},
+			email: {
+				type: String,
+				required: true,
+				lowercase: true,
+				unique: true
+			},
+			workoutPrograms: [
+				{
+					type: Schema.Types.ObjectId, ref: "WorkoutProgram"
+				}
+			],
+			//workoutActivities: [
+			//    {
+			//        type: Schema.Types.ObjectId, ref: "workoutActivity"
+			//    }
+			//]
+		},
+		{
+			timestamps: true
+		}
+	);
 
 userSchema.virtual("fullName")
-    .get(function () {
-        return `${this.name.first} ${this.name.last}`;
-    });
+	.get(function () {
+		return `${this.name.first} ${this.name.last}`;
+	});
 
 // hashing
 userSchema.plugin(passportLocalMongoose, {
-    usernameField: "email"
+	usernameField: "email"
 });
 
 module.exports = mongoose.model("User", userSchema);
