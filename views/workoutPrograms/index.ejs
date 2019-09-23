@@ -1,0 +1,37 @@
+<h2>Workout Programs</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <!-- <th>Exercises</th> -->
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <a href="/workoutPrograms/new">Create new</a>
+    <tbody>
+        <% workoutPrograms.forEach(program => { %>
+            <tr>
+                <td>
+                    <a href="<%= `/workoutPrograms/${program._id}` %>">
+                        <%= program.title %>
+                    </a>
+                </td>
+                <br /><td><%= program.description %></td>
+                <!-- <td><%= program.exercises %></td> FOR NOW-->
+                <td>
+                    <a href="<%= `/workoutPrograms/${program._id}/edit` %>">
+                        Edit
+                    </a>
+                </td>
+                <td>
+                    <a href="<%=`/workoutPrograms/${program._id}/delete?_method=DELETE` %>"
+                        onclick="return confirm('Are you sure you want to delete this program?')">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        <% }); %>
+    </tbody>
+</table>

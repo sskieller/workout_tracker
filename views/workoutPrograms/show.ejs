@@ -1,0 +1,54 @@
+<div>
+        <a href="/workoutPrograms">View all workout programs</a>
+    </div>
+    <div>
+        <a href="<%=`/workoutPrograms/${workoutProgram._id}/edit`%>">
+            Edit workout program details
+        </a>
+    </div>
+    <div>
+        <a href="<%= `/workoutPrograms/${workoutProgram._id}/delete?_method=DELETE` %>"
+            onclick="return confirm('Are you sure you want to delete this program?')">
+            Delete
+        </a>
+    </div>
+<h1>Details for workout program: <%= workoutProgram.title %></h1>
+<table class="table">
+    <tr>
+        <th>Title</th>
+        <td><%= workoutProgram.title %></td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <br /><th><%= workoutProgram.description %></th>
+    </tr>
+</table>
+<a href="/workoutPrograms/exercise/new">
+    <span class="button">Add exercise</span>
+</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Exercise</th>
+            <th>Description</th>
+            <th>Set</th>
+            <th>Reps/Time</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% workoutProgram.exercises.forEach(exercise => { %>
+            <tr>
+                <td>
+                    <a href="<%= `/exercises/${exercise._id}` %>">
+                        <%= exercise.name %>
+                    </a>
+                </td>
+                <td><%= exercise.description %></td>
+                <td><%= exercise.numberOfSets %></td>
+                <td><%= exercise.repsOrTime %></td>
+            </tr>
+        <% }); %>
+    </tbody>
+</table>
