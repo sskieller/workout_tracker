@@ -1,5 +1,4 @@
-const createError = require('http-errors'),
-	express = require('express'),
+const express = require('express'),
 	app = express(),
 	router = express.Router(),
 
@@ -24,7 +23,6 @@ const createError = require('http-errors'),
 
 
 // App set / use
-app.set("port", process.env.PORT || 3000);
 app.set('view engine', 'ejs');
 
 router.use(express.json());
@@ -92,11 +90,5 @@ router.delete("/users/:id/delete", usersController.delete, usersController.redir
 // Exercises
 // WorkoutActivities
 
-// Error handling
-router.use(errorController.logErrors);
-router.use(errorController.respondNoResourceFound);
-router.use(errorController.respondInternalError);
 
-app.listen(app.get("port"), () => {
-	console.log(`Server running at http://localhost:${app.get("port")}`);
-});
+module.exports = app;

@@ -18,6 +18,7 @@ module.exports = {
     index: (req,res,next) => {
         User.find()
             .then(users => {
+                console.log("Found users");
                 res.locals.users = users;
                 next();
             })
