@@ -21,6 +21,8 @@ const express = require('express'),
 	//exercisesController = require("./controllers/exercisesController"),
 	//workoutActivitiesController = require("./controllers/workoutActivitiesController");
 
+// Required to connect to database
+const db = require('./db-init');
 
 // App set / use
 app.set('view engine', 'ejs');
@@ -77,15 +79,18 @@ router.get("/", homeController.index);
 // Users
 router.get("/users/login", usersController.login);
 router.post("/users/login", usersController.authenticate);
-router.get("/users/logout", usersController.logout, usersController.redirectView);
+router.get("/users/logout", 
+	usersController.logout, usersController.redirectView);
 router.get("/users", usersController.index, usersController.indexView);
 router.get("/users/new", usersController.new);
 router.post("/users/create", usersController.validate,
 	usersController.create, usersController.redirectView);
 router.get("/users/:id", usersController.show, usersController.showView);
 router.get("/users/:id/edit", usersController.edit);
-router.put("/users/:id/update", usersController.update, usersController.redirectView);
-router.delete("/users/:id/delete", usersController.delete, usersController.redirectView);
+router.put("/users/:id/update", 
+	usersController.update, usersController.redirectView);
+router.delete("/users/:id/delete", 
+	usersController.delete, usersController.redirectView);
 // WorkoutPrograms
 // Exercises
 // WorkoutActivities

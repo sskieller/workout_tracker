@@ -20,16 +20,16 @@ const mongoose = require("mongoose"),
                 lowercase: true,
                 unique: true
             },
-            workoutPrograms: [
-                {
-                    type: Schema.Types.ObjectId, ref: "workoutProgram"
-                }
-            ],
-            workoutActivities: [
-                {
-                    type: Schema.Types.ObjectId, ref: "workoutActivity"
-                }
-            ]
+            //workoutPrograms: [
+            //    {
+            //        type: Schema.Types.ObjectId, ref: "workoutProgram"
+            //    }
+            //],
+            //workoutActivities: [
+            //    {
+            //        type: Schema.Types.ObjectId, ref: "workoutActivity"
+            //    }
+            //]
         },
         {
             timestamps: true

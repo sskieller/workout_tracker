@@ -1,5 +1,5 @@
 const mongoose = require("mongoose"),
-	dbURI = "mongodb://localhost:27017/recipe_db";
+	dbURI = "mongodb://localhost:27017/workout_tracker_db";
 
 // Using promises
 mongoose.Promise = global.Promise;
