@@ -3,16 +3,17 @@
  KØR:  
  npm install  
  npm start  
- 
-Nyeste ændringer:
-udover nogle ekstra knapper har vi lavet lidt routing og default øvelse ved oprettelsen af et nyt træningsprogram.
-NewExercise.ejs nåede vi kun lige at begynde på, så den har en masse fejl når man prøver at poste den. 
 
-// TODO: på en eller anden måde skal WORKOUTPROGRAM opdateres til at kunne modificeres  
-// med EXERCISES. Se i WORKOUTPROGRAMSCONTROLLER, samt WORKOUTPROGRAM model for mere.  
-// APP.JS indeholder routes, men kræver nogle stykker mere for at kunne lave exercises.  
-// Kig i SHOW.EJS for WORKOUTPROGRAMS for at se oversigten over visningen af det   
-// enkelte workoutProgram.   
+TODO:  
+- tilføj authentication til visse links  
+- enten fjern knapper for exercises eller  
+- tilføj model (populate) for exercises og tilføj funktionalitet for at create/edit/delete disse  
+--- https://stackoverflow.com/questions/45515992/mongodb-and-express-dynamic-queries-for-routes-with-several-ids  
+- tjek at der ikke bliver lavet en fake exercise tilføjelse ved workout Creation  
+- tjek kravene på opgaven mod løsningen  
+- fjern/tilføj workoutActivities  
+
+
 
 Se evt: https://mongoosejs.com/docs/populate.html  
 https://stackoverflow.com/questions/54438939/save-mongo-mongoose-object-within-another-model  
