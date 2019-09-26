@@ -1,14 +1,23 @@
 const WorkoutProgram = require("../models/workoutProgram"),
 
     getWorkoutProgramParams = (body) => {
+
+        if(body.exercises == null){
+            body.exercises = {                 
+            name: "Warm Up",
+            description: "Warm up of your choice",
+            numberOfSets: 1,
+            repsOrTime: 1}
+        }
+
         return {
             title: body.title,
             description: body.description,
             exercises: {
-                name: body.exercises.name,
-                description: body.exercises.description,
-                numberOfSets: body.exercises.numberOfSets,
-                repsOrTime: body.exercises.repsOrTime
+                 name: body.exercises.name,
+                 description: body.exercises.description,
+                 numberOfSets: body.exercises.numberOfSets,
+                 repsOrTime: body.exercises.repsOrTime
             }
         };
     };
@@ -42,7 +51,7 @@ module.exports = {
         if (req.skip) next();
 
         let newWorkoutProgram = new WorkoutProgram(getWorkoutProgramParams(req.body));
-
+        
         // This method MUST be used for creation other than USER LOGIN
         WorkoutProgram.create(newWorkoutProgram)
             .then(program => {
@@ -62,6 +71,10 @@ module.exports = {
         let redirectPath = res.locals.redirect;
         if (redirectPath) res.redirect(redirectPath);
         else next();
+    },
+
+    newExercise: (req,res) => {
+        res.render("workoutPrograms/newExercise");
     },
 
     show: (req,res,next) => {

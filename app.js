@@ -113,6 +113,8 @@ router.post("/workoutPrograms/create",
 	workoutProgramsController.redirectView);
 router.get("/workoutPrograms/:id", 
 	workoutProgramsController.show, workoutProgramsController.showView);
+router.get("/workoutPrograms/:id/newExercise",
+		workoutProgramsController.show, workoutProgramsController.newExercise);
 router.get("/workoutPrograms/:id/edit", 
 	workoutProgramsController.edit);
 router.put("/workoutPrograms/:id/update", 
@@ -121,6 +123,7 @@ router.put("/workoutPrograms/:id/update",
 router.delete("/workoutPrograms/:id/delete", 
 	workoutProgramsController.delete, 
 	workoutProgramsController.redirectView);
+
 
 // TODO: på en eller anden måde skal WORKOUTPROGRAM opdateres til at kunne modificeres
 // med EXERCISES. Se i WORKOUTPROGRAMSCONTROLLER, samt WORKOUTPROGRAM model for mere.

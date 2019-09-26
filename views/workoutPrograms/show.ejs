@@ -23,7 +23,7 @@
         <br /><th><%= workoutProgram.description %></th>
     </tr>
 </table>
-<a href="/workoutPrograms/exercise/new">
+<a href="<%=`/workoutPrograms/${workoutProgram._id}/newExercise`%>">
     <span class="button">Add exercise</span>
 </a>
 <table class="table">

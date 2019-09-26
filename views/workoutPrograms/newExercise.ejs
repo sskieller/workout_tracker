@@ -1,12 +1,25 @@
 <div class="data-form">
         <form class="form-signin" action="<%=`/workoutPrograms/${workoutProgram._id}/newExercise?_method=PUT`%>" method="POST">
-        <h2 class="form-signin-header">Edit workout program: </h2>
-        <label for="inputTitle">Title</label>
-        <input type="text" name="title" id="inputTitle" class="form-control"
-            value="<%= workoutProgram.title %>" placeholder="Title" autofocus>
+        <h2 class="form-signin-header">Add new exercise: </h2>
+        <label for="inputExercise">Exercise</label>
+        <input type="text" name="title" id="inputExercise" class="form-control"
+            value="" placeholder="Exercise type" autofocus>
         <label for="inputDescription">Description</label>
         <input type="text" name="description" id="inputDescription" class="form-control"
-            value="<%= workoutProgram.description %>" placeholder="Description">
-            <br /><button class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
+            value="" placeholder="Description">
+
+        <label for="inputSets">Set</label>
+        <input type="number" min="0"  max="100" name="sets" id="inputSets" class="form-control"
+        value="<%= workoutProgram.sets %>" autofocus>
+
+        <label for="inputRepsTime">Reps/time</label>
+        <input type="number"  min="0"  max="100" name="Reps" id="inputRepsTime" class="form-control"
+        value="<%= workoutProgram.Reps %>" autofocus>
+
+            <br /><button class="btn btn-lg btn-primary btn-block" type="submit">Add Exercise</button>
         </form>
     </div>
+
+    <a href="<%=`/workoutPrograms/${workoutProgram._id}`%>"> 
+        <br /><button class="btn btn-lg btn-primary btn-block" type="submit">Cancel</button>
+    </a>

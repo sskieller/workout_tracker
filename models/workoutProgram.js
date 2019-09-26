@@ -14,8 +14,7 @@ const mongoose = require("mongoose"),
 			exercises: [{
 				name: {
 					type: String,
-					required: true,
-					unique: true,
+					required: true
 				},
 				description: {
 					type: String,

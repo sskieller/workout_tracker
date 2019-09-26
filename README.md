@@ -4,6 +4,9 @@
  npm install  
  npm start  
  
+Nyeste ændringer:
+udover nogle ekstra knapper har vi lavet lidt routing og default øvelse ved oprettelsen af et nyt træningsprogram.
+NewExercise.ejs nåede vi kun lige at begynde på, så den har en masse fejl når man prøver at poste den. 
 
 // TODO: på en eller anden måde skal WORKOUTPROGRAM opdateres til at kunne modificeres  
 // med EXERCISES. Se i WORKOUTPROGRAMSCONTROLLER, samt WORKOUTPROGRAM model for mere.  
