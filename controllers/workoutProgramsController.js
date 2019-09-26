@@ -2,28 +2,38 @@ const WorkoutProgram = require("../models/workoutProgram"),
 
     getWorkoutProgramParams = (body) => {
 
-        if(body.exercises == null){
-            body.exercises = {                 
-            name: "Warm Up",
-            description: "Warm up of your choice",
-            numberOfSets: 1,
-            repsOrTime: 1}
+        if (body.exercises == null) {
+            body.exercises = {
+                name: "Warm Up",
+                description: "Warm up of your choice",
+                numberOfSets: 1,
+                repsOrTime: 1
+            }
         }
 
         return {
             title: body.title,
             description: body.description,
             exercises: {
-                 name: body.exercises.name,
-                 description: body.exercises.description,
-                 numberOfSets: body.exercises.numberOfSets,
-                 repsOrTime: body.exercises.repsOrTime
+                name: body.exercises.name,
+                description: body.exercises.description,
+                numberOfSets: body.exercises.numberOfSets,
+                repsOrTime: body.exercises.repsOrTime
             }
         };
+    },
+
+    getWorkoutExerciseParams = (body) => {
+        return {
+            name: body.name,
+            description: body.description,
+            numberOfSets: body.numberOfSets,
+            repsOrTime: body.repsOrTime
+        }
     };
 
 module.exports = {
-    index: (req,res,next) => {
+    index: (req, res, next) => {
         WorkoutProgram.find()
             .then(programs => {
                 res.locals.workoutPrograms = programs;
@@ -34,7 +44,7 @@ module.exports = {
             });
     },
 
-    indexView: (req,res) => {
+    indexView: (req, res) => {
         res.render("workoutPrograms/index", {
             flashMessages: {
                 success: "Loaded all workout programs",
@@ -42,16 +52,16 @@ module.exports = {
         });
     },
 
-    new: (req,res) => {
+    new: (req, res) => {
         res.render("workoutPrograms/new");
     },
 
-    create: (req,res,next) => {
+    create: (req, res, next) => {
         // If validation fails
         if (req.skip) next();
 
         let newWorkoutProgram = new WorkoutProgram(getWorkoutProgramParams(req.body));
-        
+
         // This method MUST be used for creation other than USER LOGIN
         WorkoutProgram.create(newWorkoutProgram)
             .then(program => {
@@ -67,17 +77,17 @@ module.exports = {
             })
     },
 
-    redirectView: (req,res,next) => {
+    redirectView: (req, res, next) => {
         let redirectPath = res.locals.redirect;
         if (redirectPath) res.redirect(redirectPath);
         else next();
     },
 
-    newExercise: (req,res) => {
+    newExercise: (req, res) => {
         res.render("workoutPrograms/newExercise");
     },
 
-    show: (req,res,next) => {
+    show: (req, res, next) => {
         let programId = req.params.id;
         WorkoutProgram.findById(programId)
             .then(program => {
@@ -86,11 +96,11 @@ module.exports = {
             })
     },
 
-    showView: (req,res) => {
+    showView: (req, res) => {
         res.render("workoutPrograms/show");
     },
 
-    edit: (req,res,next) => {
+    edit: (req, res, next) => {
         let workoutProgramId = req.params.id;
         WorkoutProgram.findById(workoutProgramId)
             .then(workoutProgram => {
@@ -109,7 +119,38 @@ module.exports = {
         workoutProgramParams = getWorkoutProgramParams(req.body);
 
         WorkoutProgram.findByIdAndUpdate(workoutProgramId, {
-            $set: workoutProgramParams
+            $set: 
+            {
+                title: workoutProgramParams.title,
+                description: workoutProgramParams.description
+            }
+        })
+            .then(workoutProgram => {
+                res.locals.redirect = `/workoutPrograms/${workoutProgramId}`;
+                res.locals.workoutProgram = workoutProgram;
+                next();
+            })
+            .catch(error => {
+                console.log(`Error updating workout program by ID: ${error.message}`);
+                next(error);
+            });
+    },
+
+    updateExercises: (req, res, next) => {
+        let workoutProgramId = req.params.id;
+
+        workoutExerciseParams = getWorkoutExerciseParams(req.body);
+        console.log(`Name: ${workoutExerciseParams.name}, Desc: ${workoutExerciseParams.description}`);
+        WorkoutProgram.findByIdAndUpdate(workoutProgramId, {
+            $push: { 
+                exercises: 
+                {
+                    name: workoutExerciseParams.name,
+                    description: workoutExerciseParams.description,
+                    numberOfSets: workoutExerciseParams.numberOfSets,
+                    repsOrTime: workoutExerciseParams.repsOrTime
+                } 
+            }
         })
             .then(workoutProgram => {
                 res.locals.redirect = `/workoutPrograms/${workoutProgramId}`;
@@ -135,7 +176,7 @@ module.exports = {
             });
     },
 
-    validate: (req,res,next) => {
+    validate: (req, res, next) => {
         req.check("title", "Title cannot be empty").notEmpty();
         req.check("description", "Description cannot be empty").notEmpty();
 

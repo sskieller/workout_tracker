@@ -40,11 +40,7 @@
     <tbody>
         <% workoutProgram.exercises.forEach(exercise => { %>
             <tr>
-                <td>
-                    <a href="<%= `/exercises/${exercise._id}` %>">
-                        <%= exercise.name %>
-                    </a>
-                </td>
+                <td><%= exercise.name %></td>
                 <td><%= exercise.description %></td>
                 <td><%= exercise.numberOfSets %></td>
                 <td><%= exercise.repsOrTime %></td>

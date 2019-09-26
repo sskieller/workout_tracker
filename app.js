@@ -104,7 +104,8 @@ router.delete("/users/:id/delete",
 
 // WorkoutPrograms
 router.get("/workoutPrograms", 
-	workoutProgramsController.index, workoutProgramsController.indexView);
+	workoutProgramsController.index, 
+	workoutProgramsController.indexView);
 router.get("/workoutPrograms/new", 
 	workoutProgramsController.new);
 router.post("/workoutPrograms/create", 
@@ -112,9 +113,14 @@ router.post("/workoutPrograms/create",
 	workoutProgramsController.create, 
 	workoutProgramsController.redirectView);
 router.get("/workoutPrograms/:id", 
-	workoutProgramsController.show, workoutProgramsController.showView);
+	workoutProgramsController.show, 
+	workoutProgramsController.showView);
 router.get("/workoutPrograms/:id/newExercise",
-		workoutProgramsController.show, workoutProgramsController.newExercise);
+	workoutProgramsController.show, 
+	workoutProgramsController.newExercise);
+router.put("/workoutPrograms/:id/newExercise",
+	workoutProgramsController.updateExercises,
+	workoutProgramsController.redirectView);
 router.get("/workoutPrograms/:id/edit", 
 	workoutProgramsController.edit);
 router.put("/workoutPrograms/:id/update", 
