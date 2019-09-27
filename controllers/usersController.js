@@ -141,7 +141,7 @@ module.exports = {
 		req.check("email", "Email is invalid").isEmail();
 
 		req.check("password", "Password cannot be empty").notEmpty();
-
+		
 		req.getValidationResult().then((error) => {
 			if (!error.isEmpty()) {
 				let messages = error.array().map(e => e.msg);
