@@ -33,18 +33,20 @@
             <th>Description</th>
             <th>Set</th>
             <th>Reps/Time</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <!-- <th>Edit</th>
+            <th>Delete</th> -->
         </tr>
     </thead>
-    <tbody>
-        <% workoutProgram.exercises.forEach(exercise => { %>
-            <tr>
-                <td><%= exercise.name %></td>
-                <td><%= exercise.description %></td>
-                <td><%= exercise.numberOfSets %></td>
-                <td><%= exercise.repsOrTime %></td>
-            </tr>
-        <% }); %>
-    </tbody>
+    <% if (workoutProgram.exercises) { %>
+        <tbody>
+            <% workoutProgram.exercises.forEach(exercise => { %>
+                <tr>
+                    <td><%= exercise.name %></td>
+                    <td><%= exercise.description %></td>
+                    <td><%= exercise.numberOfSets %></td>
+                    <td><%= exercise.repsOrTime %></td>
+                </tr>
+            <% }); %>
+        </tbody>    
+    <%} %>
 </table>

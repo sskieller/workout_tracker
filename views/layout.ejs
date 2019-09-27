@@ -18,16 +18,16 @@
 			<a href="/">
 				<span class="button">Home</span>
 			</a>
+			<a href="/workoutPrograms">
+				<span class="button">Workout Programs</span>
+            </a>
+			<% if (loggedIn) { %>
 			<a href="/users">
 				<span class="button">Users</span>
-            </a>
-            <a href="/workoutPrograms">
-				<span class="button">Workout Programs</span>
             </a>
             <a href="/workoutActivities">
 				<span class="button">Workout Activities</span>
             </a>
-			<% if (loggedIn) { %>
 				Logged in as <a class="a-right-margin" href="<%=`/users/${currentUser._id}`%>">
 				<%= currentUser.fullName %></a>
 				<a href="/users/logout">Logout</a>

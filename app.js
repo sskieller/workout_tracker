@@ -16,8 +16,9 @@ const express = require("express"),
 
 	homeController = require("./controllers/homeController"),
 	usersController = require("./controllers/usersController"),
-	workoutProgramsController = require("./controllers/workoutProgramsController");
-	//workoutActivitiesController = require("./controllers/workoutActivitiesController");
+	workoutProgramsController = require("./controllers/workoutProgramsController"),
+	auth = require('connect-ensure-login');
+
 
 // Required to connect to database
 const db = require("./db-init");
@@ -85,48 +86,62 @@ router.get("/users/login",
 router.post("/users/login", 
 	usersController.authenticate);
 router.get("/users/logout", 
+	auth.ensureLoggedIn("/users/login"),
 	usersController.logout, usersController.redirectView);
 // USERS
-router.get("/users", 
+router.get("/users",
+	auth.ensureLoggedIn("/users/login"), 
 	usersController.index, usersController.indexView);
 router.get("/users/new", 
 	usersController.new);
 router.post("/users/create", 
 	usersController.validate, usersController.create, usersController.redirectView);
 router.get("/users/:id", 
+	auth.ensureLoggedIn("/users/login"),
 	usersController.show, usersController.showView);
 router.get("/users/:id/edit", 
+	auth.ensureLoggedIn("/users/login"),
 	usersController.edit);
 router.put("/users/:id/update", 
+	auth.ensureLoggedIn("/users/login"),
 	usersController.update, usersController.redirectView);
 router.delete("/users/:id/delete", 
+	auth.ensureLoggedIn("/users/login"),
 	usersController.delete, usersController.redirectView);
 
 // WorkoutPrograms
 router.get("/workoutPrograms", 
 	workoutProgramsController.index, 
 	workoutProgramsController.indexView);
-router.get("/workoutPrograms/new", 
+router.get("/workoutPrograms/new",
+	auth.ensureLoggedIn("/users/login"), 
 	workoutProgramsController.new);
-router.post("/workoutPrograms/create", 
+router.post("/workoutPrograms/create",
+	auth.ensureLoggedIn("/users/login"), 
 	workoutProgramsController.validate, 
 	workoutProgramsController.create, 
 	workoutProgramsController.redirectView);
-router.get("/workoutPrograms/:id", 
+router.get("/workoutPrograms/:id",
+	auth.ensureLoggedIn("/users/login"),
 	workoutProgramsController.show, 
 	workoutProgramsController.showView);
 router.get("/workoutPrograms/:id/newExercise",
+	auth.ensureLoggedIn("/users/login"),
 	workoutProgramsController.show, 
 	workoutProgramsController.newExercise);
 router.put("/workoutPrograms/:id/newExercise",
+	auth.ensureLoggedIn("/users/login"),
 	workoutProgramsController.updateExercises,
 	workoutProgramsController.redirectView);
 router.get("/workoutPrograms/:id/edit", 
+	auth.ensureLoggedIn("/users/login"),
 	workoutProgramsController.edit);
 router.put("/workoutPrograms/:id/update", 
+	auth.ensureLoggedIn("/users/login"),
 	workoutProgramsController.update, 
 	workoutProgramsController.redirectView);
 router.delete("/workoutPrograms/:id/delete", 
+	auth.ensureLoggedIn("/users/login"),
 	workoutProgramsController.delete, 
 	workoutProgramsController.redirectView);
 

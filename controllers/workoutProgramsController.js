@@ -1,26 +1,20 @@
 const WorkoutProgram = require("../models/workoutProgram"),
 
     getWorkoutProgramParams = (body) => {
-
         if (body.exercises == null) {
-            body.exercises = {
-                name: "Warm Up",
-                description: "Warm up of your choice",
-                numberOfSets: 1,
-                repsOrTime: 1
-            }
+            return { title: body.title, description: body.description};
+        } else {
+            return {
+                title: body.title,
+                description: body.description,
+                exercises: {
+                    name: body.exercises.name,
+                    description: body.exercises.description,
+                    numberOfSets: body.exercises.numberOfSets,
+                    repsOrTime: body.exercises.repsOrTime
+                }
+            };
         }
-
-        return {
-            title: body.title,
-            description: body.description,
-            exercises: {
-                name: body.exercises.name,
-                description: body.exercises.description,
-                numberOfSets: body.exercises.numberOfSets,
-                repsOrTime: body.exercises.repsOrTime
-            }
-        };
     },
 
     getWorkoutExerciseParams = (body) => {

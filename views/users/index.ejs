@@ -4,8 +4,8 @@
         <tr>
             <th>Name</th>
             <th>Email</th>
-            <th>Workout Programs</th>
-            <th>Workout Activities</th>
+            <!-- <th>Workout Programs</th>
+            <th>Workout Activities</th> -->
             <th>Edit</th>
             <th>Delete</th>
         </tr>
@@ -13,27 +13,27 @@
     <a href="/users/new">Create new</a>
     <tbody>
         <% users.forEach(user => { %>
-        <tr>
-            <td>
-                <a href="<%= `/users/${user._id}` %>">
-                    <%= user.fullName %>
-                </a>
-            </td>
-            <td><%= user.email %></td>
-            <!-- <td><%= user.workoutPrograms%></td>
-            <td><%= user.workoutActivities%></td> -->
-            <td>
-                <a href="<%=`/users/${user._id}/edit` %>">
-                    Edit
-                </a>
-            </td>
-            <td>
+            <tr>
+                <td>
+                    <a href="<%= `/users/${user._id}` %>">
+                        <%= user.fullName %>
+                    </a>
+                </td>
+                <td><%= user.email %></td>
+                <!-- <td><%= user.workoutPrograms%></td>
+                <td><%= user.workoutActivities%></td> -->
+                <td>
+                    <a href="<%=`/users/${user._id}/edit` %>">
+                        Edit
+                    </a>
+                </td>
+                <td>
                     <a href="<%=`/users/${user._id}/delete?_method=DELETE` %>"
                         onclick="return confirm('Are you sure you want to delete this record?')">
                         Delete
                     </a>
                 </td>
-        </tr>
+            </tr>
         <% }); %>
     </tbody>
 </table>
