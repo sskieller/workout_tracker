@@ -3,7 +3,7 @@
 module.exports = {
 	index: (req,res ) => {
 		res.render("index", {
-			title: "Nikita og Søren's Bryllup 2019"
+			title: "Workout Tracker"
 		});
 	},
 
